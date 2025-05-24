@@ -1,28 +1,21 @@
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const email = document.getElementById('email').value.trim();
+    const user = document.getElementById('user').value.trim();
     const password = document.getElementById('password').value.trim();
 
-    if (!email || !password) {
+    if (!user || !password) {
         alertBuilder('danger', 'Todos los campos son obligatorios.');
         return;
     }
 
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-        alertBuilder('danger', 'Correo electrónico no es válido.');
-        return;
-    }
-
-    console.log('Enviando petición de login...');
+    console.log('peTicion');
 
     fetch('https://dummyjson.com/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            // username: 'emilys',
-            // password: 'emilyspass',
-            // username: email,
-            // password: password,
+            username: user,
+            password: password,
             expiresInMins: 30
         }),
     })
@@ -32,11 +25,12 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         })
         .then(data => {
             console.log('Datos del login:', data);
+            window.location.href = 'admin/dashboard.html';
         })
         .catch(error => {
             console.error('Error al hacer login:', error);
         });
-    
+
 });
 
 function alertBuilder(alertType, message) {
