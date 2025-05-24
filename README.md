@@ -10,5 +10,13 @@ Se empezó con el logueo indicando que se requería un usuario y contraseña par
 
 Dentro de lo que se hizo se trabajó: diseños con bootstrap, css y javascript para la conexión de la api y mostrar los datos contenidos en ella.
 
+![image](https://github.com/user-attachments/assets/e82ff0ed-8c4d-481b-9448-3ceab0a79949)
+
+![image](https://github.com/user-attachments/assets/d82c9c9e-90b2-4b85-bcdd-d6fe2067fc2e)
+
+
+
+
+
 
 
