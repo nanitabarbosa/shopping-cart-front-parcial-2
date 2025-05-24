@@ -1,55 +1,48 @@
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    login(email,password)
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!email || !password) {
+        alertBuilder('danger', 'Todos los campos son obligatorios.');
+        return;
+    }
+
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        alertBuilder('danger', 'Correo electrónico no es válido.');
+        return;
+    }
+
+    console.log('Enviando petición de login...');
+
+    fetch('https://dummyjson.com/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            // username: 'emilys',
+            // password: 'emilyspass',
+            // username: email,
+            // password: password,
+            expiresInMins: 30
+        }),
+    })
+        .then(res => {
+            console.log('Respuesta recibida:', res);
+            return res.json();
+        })
+        .then(data => {
+            console.log('Datos del login:', data);
+        })
+        .catch(error => {
+            console.error('Error al hacer login:', error);
+        });
+    
 });
 
-function login(email, password) {
-    let message= ''
-    let alertType=''
-    
-    const REQRES_ENDPOINT = 'https://reqres.in/api/login'
-    fetch(REQRES_ENDPOINT,  {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-            'x-api-key':'reqres-free-v1'
-        },
-        body: JSON.stringify({email,password})
-    })
-    .then((response) =>{
-        if (response.status ===200) {
-            alertType ='success'
-            message ='inicio exitoso'
-            alertBuilder(alertType,message)
-            localStorage.setItem('token',"user1")
-            setTimeout (()=>{
-                location.href='admin/dashboard.html'
-            },2000)
-        } else {
-            alertType='danger'
-            message='correo o contraseña invalida'
-        }
-        
-
-        console.log('respuesta del servicio', response)
-        alertBuilder(alertType, message)
-    })
-    .catch((error)=>{
-        alertType ='danger'
-        message = 'error inesperado'
-        console.log('error en el setvicio', error)
-        alertBuilder(alertType, message)
-    })
-}
-
-
 function alertBuilder(alertType, message) {
-    const alert= `<div class="alert alert-${alertType} alert-dismissible fade show" role="alert" >
+    const alert = `<div class="alert alert-${alertType} alert-dismissible fade show" role="alert">
     ${message}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`
-    document.getElementById('mensaje').innerHTML=alert;
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+  </div>`;
+    document.getElementById('mensaje').innerHTML = alert;
 }
-
-  

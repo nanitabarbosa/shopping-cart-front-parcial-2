@@ -2,7 +2,7 @@
 
 function users(page) {
     document.getElementById('cardHeader').innerHTML ='<h5>Listado de usuarios</h5>'
-    const REQRES_ENDPOINT = 'https://reqres.in/api/users?page='+page
+    const REQRES_ENDPOINT = 'https://dummyjson.com/auth/login' +page
     fetch(REQRES_ENDPOINT,  {
         method: 'GET',
         headers: {
